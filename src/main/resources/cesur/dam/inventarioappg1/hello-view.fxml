@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cesur.dam.inventarioappg1.HelloController">
+   <center>
+      <VBox alignment="CENTER" maxWidth="300.0" spacing="20.0" BorderPane.alignment="CENTER">
+          <padding>
+              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+          </padding>
+         <ImageView fitHeight="71.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@computer.png" />
+            </image>
+         </ImageView>
+      
+          <Label fx:id="welcomeText" text="Ficha de equipo">
+            <font>
+               <Font name="System Bold" size="24.0" />
+            </font>
+         </Label>
+         <FlowPane alignment="CENTER">
+            <children>
+               <Label prefWidth="66.0" text="Id" />
+               <TextField fx:id="txtId" />
+            </children>
+         </FlowPane>
+         <FlowPane alignment="CENTER">
+            <children>
+               <Label prefWidth="66.0" text="Nombre" />
+               <TextField fx:id="txtNombre" />
+            </children>
+         </FlowPane>
+         <FlowPane alignment="CENTER">
+            <children>
+               <Label prefWidth="66.0" text="Categoria" />
+               <TextField fx:id="txtCategoria" />
+            </children>
+         </FlowPane>
+         <FlowPane alignment="CENTER" layoutX="30.0" layoutY="142.0">
+            <children>
+               <Label prefWidth="66.0" text="Disponible" />
+               <TextField fx:id="txtDisponible" />
+            </children>
+         </FlowPane>
+         <FlowPane alignment="CENTER" hgap="20.0">
+            <children>
+                <Button contentDisplay="TOP" graphicTextGap="0.0" onAction="#guardar" text="Guardar">
+                  <graphic>
+                     <ImageView fitHeight="150.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@disk.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+               </Button>
+               <Button mnemonicParsing="false" onAction="#volver" text="Volver" />
+            </children>
+         </FlowPane>
+      </VBox>
+   </center>
+</BorderPane>
