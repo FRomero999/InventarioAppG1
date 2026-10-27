@@ -1,23 +1,55 @@
 package cesur.dam.inventarioappg1;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 
-public class HelloController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class HelloController implements Initializable {
+
     @FXML
     private Label welcomeText;
     @FXML
-    private TextField txtDisponible;
-    @FXML
-    private TextField txtId;
-    @FXML
     private TextField txtNombre;
     @FXML
-    private TextField txtCategoria;
+    private ChoiceBox<String> choiceCategoria;
+    @FXML
+    private CheckBox chkDisponible;
+    @FXML
+    private Spinner<Integer> spinnerId;
 
+    /**
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  {@code null} if the location is not known.
+     * @param resources The resources used to localize the root object, or {@code null} if
+     *                  the root object was not localized.
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        spinnerId.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 0,1));
+
+        ObservableList<String> categorias = FXCollections.observableArrayList();
+        choiceCategoria.setItems(categorias);
+
+        categorias.add("Keyboard");
+        categorias.add("Laptop");
+
+        choiceCategoria.getItems().add("Gamepad");
+        choiceCategoria.getItems().add("Monitor");
+        choiceCategoria.getItems().add("Computer");
+        choiceCategoria.getItems().add("Printer");
+
+        choiceCategoria.getSelectionModel().selectFirst();
+    }
 
     /**
      * Guarda los datos introducidos en el formulario.
@@ -39,12 +71,15 @@ public class HelloController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Guardar");
         alert.setHeaderText("Guardando");
-        alert.setContentText(txtNombre.getText());
+
+        String nombre = txtNombre.getText();
+        String categoria = choiceCategoria.getSelectionModel().getSelectedItem();
+        String disponible = chkDisponible.isSelected() ? "disponible" : "no disponible";
+
+        alert.setContentText(nombre + " | " + categoria + " | " + disponible);
         alert.showAndWait();
-        txtId.clear();
         txtNombre.clear();
-        txtCategoria.clear();
-        txtDisponible.clear();
+
     }
 
     /**
@@ -54,10 +89,7 @@ public class HelloController {
      *         o disponible está vacío; {@code false} en caso contrario
      */
     private boolean hayCamposVacios() {
-        return txtId.getText().isEmpty()
-                || txtNombre.getText().isEmpty()
-                || txtCategoria.getText().isEmpty()
-                || txtDisponible.getText().isEmpty();
+        return txtNombre.getText().isEmpty();
     }
 
     /**
