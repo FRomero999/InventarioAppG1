@@ -1,6 +1,10 @@
 package cesur.dam.inventarioappg1.controllers;
 
+import cesur.dam.inventarioappg1.AppG1;
+import cesur.dam.inventarioappg1.data.DataSourceFactory;
+import cesur.dam.inventarioappg1.data.EquipoJdbcDAO;
 import cesur.dam.inventarioappg1.models.Equipo;
+import cesur.dam.inventarioappg1.ui.helper.MessageHelper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,32 +12,31 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 
+import javax.sql.DataSource;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static cesur.dam.inventarioappg1.controllers.DetailsController.lop;
 
 public class DetailsController implements Initializable {
 
     @FXML
-    private Label welcomeText;
+    public Button btnNuevo;
     @FXML
-    private TextField txtName;
+    public Button btnSalir;
     @FXML
-    private ChoiceBox<String> choiceCategory;
-    @FXML
-    private CheckBox chkAvailable;
-    @FXML
-    private Spinner<Integer> spinnerId;
-    @FXML
-    private TableColumn<Equipo,String> cAvailability;
+    private TableColumn<Equipo, String> cAvailability;
     @FXML
     private TableView<Equipo> table;
     @FXML
-    private TableColumn<Equipo,String> cCategory;
+    private TableColumn<Equipo, String> cCategory;
     @FXML
-    private TableColumn<Equipo,String> cName;
+    private TableColumn<Equipo, String> cName;
     @FXML
-    private TableColumn<Equipo,String> cId;
+    private TableColumn<Equipo, String> cId;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -44,51 +47,46 @@ public class DetailsController implements Initializable {
      * @param resources The resources used to localize the root object, or {@code null} if
      *                  the root object was not localized.
      */
+
+    static DataSource dao = DataSourceFactory.getDataSource();
+    static EquipoJdbcDAO lop = new EquipoJdbcDAO(dao);
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        spinnerId.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 0,1));
 
-        /*
-            ChoiceBox  \
-            ListView    \ Observable .getItems() .setItems()
-            TableView   /
+        EquipoJdbcDAO lop = new EquipoJdbcDAO(dao);
 
-         */
 
-        ObservableList<String> categories = FXCollections.observableArrayList();
-        choiceCategory.setItems(categories);
-
-        categories.add("Keyboard");
-        categories.add("Laptop");
-
-        choiceCategory.getItems().add("Gamepad");
-        choiceCategory.getItems().add("Monitor");
-        choiceCategory.getItems().add("Computer");
-        choiceCategory.getItems().add("Printer");
-
-        choiceCategory.getSelectionModel().selectFirst();
 
         /* Inicialización de la tabla */
-        cId.setCellValueFactory( (row)->{
+        cId.setCellValueFactory((row) -> {
             Equipo equipment = row.getValue();
-            Long  id = equipment.getId();
+            Long id = equipment.getId();
             return new SimpleStringProperty(String.valueOf(id));
         });
-        cName.setCellValueFactory( (row)->{
-            if(row.getValue().getNombre().isBlank()){
+        cName.setCellValueFactory((row) -> {
+            if (row.getValue().getNombre().isBlank()) {
                 return new SimpleStringProperty("--");
-            } else  {
+            } else {
                 return new SimpleStringProperty(String.valueOf(row.getValue().getNombre()));
             }
         });
-        cCategory.setCellValueFactory( (row)->{
+        cCategory.setCellValueFactory((row) -> {
             return new SimpleStringProperty(String.valueOf(row.getValue().getCategoria()).toUpperCase());
         });
-        cAvailability.setCellValueFactory( (row)->{
+        cAvailability.setCellValueFactory((row) -> {
             var availability = row.getValue().getDisponible();
-            String output = availability? "disponible":"no disponible";
+            String output = availability ? "disponible" : "no disponible";
             return new SimpleStringProperty(output);
         });
+        if(!lop.findAll().isEmpty()) {
+            for(Equipo lkl : lop.findAll()) {
+                table.getItems().add(lkl);
+            }
+        }
+
+
+
+
     }
 
     /**
@@ -102,47 +100,6 @@ public class DetailsController implements Initializable {
      *
      * @param actionEvent evento de acción generado al pulsar el botón guardar
      */
-    @FXML
-    public void save(ActionEvent actionEvent) {
-        if (hasEmptyFields()) {
-            return;
-        }
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Guardar");
-        alert.setHeaderText("Guardando");
-
-        String name = txtName.getText();
-        String category = choiceCategory.getSelectionModel().getSelectedItem();
-        String available = chkAvailable.isSelected() ? "disponible" : "no disponible";
-
-        alert.setContentText(name + " | " + category + " | " + available);
-        alert.showAndWait();
-        txtName.clear();
-
-        Equipo equipment = new Equipo();
-        equipment.setNombre(name);
-        equipment.setCategoria(category);
-        equipment.setId(Long.valueOf(spinnerId.getValue()));
-        equipment.setDisponible(chkAvailable.isSelected());
-
-        table.getItems().add(equipment);
-
-        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(oldValue+" | "+newValue);
-        });
-
-    }
-
-    /**
-     * Comprueba si alguno de los campos del formulario está vacío.
-     *
-     * @return {@code true} si al menos uno de los campos id, nombre, categoría
-     *         o disponible está vacío; {@code false} en caso contrario
-     */
-    private boolean hasEmptyFields() {
-        return txtName.getText().isEmpty();
-    }
 
     /**
      * Cierra la aplicación.
@@ -153,8 +110,20 @@ public class DetailsController implements Initializable {
      *
      * @param actionEvent evento de acción generado al pulsar el botón volver
      */
+    @Deprecated
+    public void goBack(ActionEvent actionEvent) throws IOException {
+
+        ;
+    }
+
     @FXML
-    public void goBack(ActionEvent actionEvent) {
-        System.exit(0);
+    public void onNuevo(ActionEvent actionEvent) throws IOException {
+        AppG1.setescena("views/create-view.fxml");
+
+    }
+
+    @FXML
+    protected void onSalir(ActionEvent event) throws IOException {
+        AppG1.setescena("views/login-view.fxml");
     }
 }

@@ -8,12 +8,18 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class AppG1 extends Application {
+    static Scene scene;
+    static Stage stage;
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppG1.class.getResource("views/login-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Inventario App G1");
-        stage.setScene(scene);
+        this.stage=stage;
+        setescena("views/login-view.fxml");
         stage.show();
+    }
+    public static void setescena(String fil) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(AppG1.class.getResource(fil));
+        Scene es =new Scene(fxmlLoader.load());
+        stage.setScene(es);
     }
 }
