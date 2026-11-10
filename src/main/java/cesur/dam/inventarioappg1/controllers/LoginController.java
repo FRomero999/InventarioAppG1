@@ -6,6 +6,6 @@ public class LoginController {
 
     @javafx.fxml.FXML
     public void login(ActionEvent actionEvent) {
-        /* TODO */
+
     }
 }
