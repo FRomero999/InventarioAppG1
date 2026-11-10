@@ -1,5 +1,7 @@
 package cesur.dam.inventarioappg1.controllers;
 
+import cesur.dam.inventarioappg1.data.DataSourceFactory;
+import cesur.dam.inventarioappg1.data.EquipoJdbcDAO;
 import cesur.dam.inventarioappg1.models.Equipo;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -45,6 +47,12 @@ public class MainController implements Initializable {
             var availability = row.getValue().getDisponible();
             String output = availability? "disponible":"no disponible";
             return new SimpleStringProperty(output);
+        });
+
+        var dao = new EquipoJdbcDAO(DataSourceFactory.getDataSource());
+        dao.findAll().forEach( (equipo)->{
+            System.out.println(equipo);
+            table.getItems().add(equipo);
         });
     }
 }
