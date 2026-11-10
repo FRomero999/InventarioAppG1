@@ -4,6 +4,7 @@ import cesur.dam.inventarioappg1.data.DataSourceFactory;
 import cesur.dam.inventarioappg1.data.EquipoJdbcDAO;
 import cesur.dam.inventarioappg1.models.Equipo;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -54,5 +55,13 @@ public class MainController implements Initializable {
             System.out.println(equipo);
             table.getItems().add(equipo);
         });
+    }
+
+    @FXML
+    public void goBack(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    public void addNew(ActionEvent actionEvent) {
     }
 }
