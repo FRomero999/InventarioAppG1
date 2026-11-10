@@ -56,17 +56,7 @@
                <CheckBox fx:id="chkAvailable" alignment="CENTER" mnemonicParsing="false" text="Disponible" />
             </children>
          </FlowPane>
-         <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0">
-           <columns>
-             <TableColumn fx:id="cId" prefWidth="75.0" text="Id" />
-             <TableColumn fx:id="cName" prefWidth="75.0" text="Nombre" />
-               <TableColumn fx:id="cCategory" prefWidth="75.0" text="Categoria" />
-               <TableColumn fx:id="cAvailability" prefWidth="75.0" text="Disponibilidad" />
-           </columns>
-            <columnResizePolicy>
-               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-            </columnResizePolicy>
-         </TableView>
+
          <FlowPane alignment="CENTER" hgap="20.0">
             <children>
                 <Button contentDisplay="TOP" graphicTextGap="0.0" onAction="#save" text="Guardar">

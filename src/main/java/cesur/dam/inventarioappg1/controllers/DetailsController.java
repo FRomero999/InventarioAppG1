@@ -1,5 +1,6 @@
 package cesur.dam.inventarioappg1.controllers;
 
+import cesur.dam.inventarioappg1.SceneNavigator;
 import cesur.dam.inventarioappg1.models.Equipo;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -24,16 +25,7 @@ public class DetailsController implements Initializable {
     private CheckBox chkAvailable;
     @FXML
     private Spinner<Integer> spinnerId;
-    @FXML
-    private TableColumn<Equipo,String> cAvailability;
-    @FXML
-    private TableView<Equipo> table;
-    @FXML
-    private TableColumn<Equipo,String> cCategory;
-    @FXML
-    private TableColumn<Equipo,String> cName;
-    @FXML
-    private TableColumn<Equipo,String> cId;
+
 
     /**
      * Called to initialize a controller after its root element has been
@@ -68,27 +60,7 @@ public class DetailsController implements Initializable {
 
         choiceCategory.getSelectionModel().selectFirst();
 
-        /* Inicialización de la tabla */
-        cId.setCellValueFactory( (row)->{
-            Equipo equipment = row.getValue();
-            Long  id = equipment.getId();
-            return new SimpleStringProperty(String.valueOf(id));
-        });
-        cName.setCellValueFactory( (row)->{
-            if(row.getValue().getNombre().isBlank()){
-                return new SimpleStringProperty("--");
-            } else  {
-                return new SimpleStringProperty(String.valueOf(row.getValue().getNombre()));
-            }
-        });
-        cCategory.setCellValueFactory( (row)->{
-            return new SimpleStringProperty(String.valueOf(row.getValue().getCategoria()).toUpperCase());
-        });
-        cAvailability.setCellValueFactory( (row)->{
-            var availability = row.getValue().getDisponible();
-            String output = availability? "disponible":"no disponible";
-            return new SimpleStringProperty(output);
-        });
+
     }
 
     /**
@@ -125,12 +97,12 @@ public class DetailsController implements Initializable {
         equipment.setCategoria(category);
         equipment.setId(Long.valueOf(spinnerId.getValue()));
         equipment.setDisponible(chkAvailable.isSelected());
-
-        table.getItems().add(equipment);
-
-        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(oldValue+" | "+newValue);
-        });
+//
+//        table.getItems().add(equipment);
+//
+//        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//            System.out.println(oldValue+" | "+newValue);
+//        });
 
     }
 
@@ -155,6 +127,6 @@ public class DetailsController implements Initializable {
      */
     @FXML
     public void goBack(ActionEvent actionEvent) {
-        System.exit(0);
+        SceneNavigator.navigateTo("main-view.fxml","Vista principal");
     }
 }

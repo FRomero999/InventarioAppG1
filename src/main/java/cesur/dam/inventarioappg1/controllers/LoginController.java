@@ -7,6 +7,6 @@ public class LoginController {
 
     @javafx.fxml.FXML
     public void login(ActionEvent actionEvent) {
-        SceneNavigator.navigateTo("details-view.fxml","Main");
+        SceneNavigator.navigateTo("main-view.fxml","Main");
     }
 }
