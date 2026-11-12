@@ -52,7 +52,7 @@ public class SceneNavigator {
         FXMLLoader fxmlLoader = new FXMLLoader(AppG1.class.getResource("views/"+fxml));
         Scene scene = null;
         try {
-            scene = new Scene(fxmlLoader.load());
+            scene = new Scene(fxmlLoader. load());
             stage.setTitle(title);
             stage.setScene(scene);
         } catch (IOException e) {

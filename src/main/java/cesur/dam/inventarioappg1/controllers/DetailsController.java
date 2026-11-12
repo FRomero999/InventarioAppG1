@@ -1,6 +1,8 @@
 package cesur.dam.inventarioappg1.controllers;
 
 import cesur.dam.inventarioappg1.SceneNavigator;
+import cesur.dam.inventarioappg1.data.DataSourceFactory;
+import cesur.dam.inventarioappg1.data.EquipoJdbcDAO;
 import cesur.dam.inventarioappg1.models.Equipo;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -97,12 +99,13 @@ public class DetailsController implements Initializable {
         equipment.setCategoria(category);
         equipment.setId(Long.valueOf(spinnerId.getValue()));
         equipment.setDisponible(chkAvailable.isSelected());
-//
-//        table.getItems().add(equipment);
-//
-//        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            System.out.println(oldValue+" | "+newValue);
-//        });
+        var dao = new EquipoJdbcDAO(DataSourceFactory.getDataSource());
+        dao.save(equipment);
+       // table.getItems().add(equipment);
+
+     //   table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+    //      System.out.println(oldValue+" | "+newValue);
+     //  });
 
     }
 

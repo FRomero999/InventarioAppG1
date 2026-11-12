@@ -1,5 +1,6 @@
 package cesur.dam.inventarioappg1.controllers;
 
+import cesur.dam.inventarioappg1.SceneNavigator;
 import cesur.dam.inventarioappg1.data.DataSourceFactory;
 import cesur.dam.inventarioappg1.data.EquipoJdbcDAO;
 import cesur.dam.inventarioappg1.models.Equipo;
@@ -59,9 +60,11 @@ public class MainController implements Initializable {
 
     @FXML
     public void goBack(ActionEvent actionEvent) {
+        SceneNavigator.navigateTo("login-view.fxml","Login");
     }
 
     @FXML
     public void addNew(ActionEvent actionEvent) {
+        SceneNavigator.navigateTo("details-view.fxml","Details");
     }
 }
