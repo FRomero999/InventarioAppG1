@@ -3,6 +3,10 @@ package cesur.dam.inventarioappg1;
 import cesur.dam.inventarioappg1.controllers.DetailsController;
 import cesur.dam.inventarioappg1.controllers.LoginController;
 import cesur.dam.inventarioappg1.controllers.MainController;
+import cesur.dam.inventarioappg1.data.DAO;
+import cesur.dam.inventarioappg1.data.DataSourceFactory;
+import cesur.dam.inventarioappg1.data.EquipoJdbcDAO;
+import cesur.dam.inventarioappg1.models.Equipo;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -29,12 +33,18 @@ public class SceneNavigator {
      * Cache of already loaded scenes, keyed by FXML file name.
      */
     private static final Map<String, Scene> sceneCache = new HashMap<>();
+    private static DAO<Equipo> equipoDAO;
 
     /**
      * Registers the stage that will be used for subsequent scene navigation.
      *
      * @param stage the main application {@link Stage}
      */
+
+    public static void setDAO(DAO<Equipo> equipoDAO) {
+        SceneNavigator.equipoDAO = equipoDAO;
+    }
+
     public static void setStage(Stage stage) {
         SceneNavigator.stage = stage;
     }
@@ -102,7 +112,7 @@ public class SceneNavigator {
         fxmlLoader.setControllerFactory(type -> {
             switch (fxml) {
                 case "login-view.fxml":   return new LoginController();
-                case "main-view.fxml":    return new MainController();
+                case "main-view.fxml":    return new MainController( (EquipoJdbcDAO) SceneNavigator.equipoDAO);
                 case "details-view.fxml": return new DetailsController();
             }
             throw new IllegalArgumentException("Vista no soportada: " + fxml);
