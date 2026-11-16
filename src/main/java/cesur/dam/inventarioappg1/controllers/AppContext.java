@@ -12,6 +12,7 @@ import javafx.collections.ObservableMap;
  * pueden ser observados desde los componentes de JavaFX.
  * </p>
  */
+
 public class AppContext {
 
     /** Instancia única del contexto, creada al cargar la clase. */
