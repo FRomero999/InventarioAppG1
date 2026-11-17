@@ -1,0 +1,28 @@
+@font-face {
+    font-family: '07LogoTypeGothic7';
+    src: url("LogoTypeGothic.otf");
+}
+
+.login-root {
+    -fx-background-color: linear-gradient(to bottom, #1e3c72, #2a5298);
+}
+
+.login-title {
+    font-family: '07LogoTypeGothic7';
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 22px;
+}
+
+.login-button {
+    -fx-background-color: #ff9800;
+    -fx-text-fill: white;
+    -fx-font-family: fantasy;
+    -fx-font-size: 16px;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.login-button:hover {
+    -fx-background-color: #fb8c00;
+}
