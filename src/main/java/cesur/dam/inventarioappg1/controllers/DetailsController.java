@@ -15,31 +15,55 @@ import javafx.scene.control.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controlador de la vista de detalle de un equipo.
+ * <p>
+ * Permite consultar, crear, modificar y eliminar un equipo. Si en el
+ * {@link AppContext} existe un equipo seleccionado, el formulario se rellena
+ * con sus datos y se actualiza; en caso contrario se crea uno nuevo.
+ * </p>
+ */
 public class DetailsController implements Initializable {
 
+    /** Etiqueta de bienvenida de la vista. */
     @FXML
     private Label welcomeText;
+
+    /** Campo de texto con el nombre del equipo. */
     @FXML
     private TextField txtName;
+
+    /** Selector de la categoría del equipo. */
     @FXML
     private ChoiceBox<String> choiceCategory;
+
+    /** Casilla que indica si el equipo está disponible. */
     @FXML
     private CheckBox chkAvailable;
 
+    /** DAO utilizado para persistir los equipos. */
     private DAO<Equipo>  equipoDAO;
 
+    /**
+     * Crea el controlador inyectando el DAO de equipos.
+     *
+     * @param dao DAO de equipos que se usará para guardar, actualizar y borrar
+     */
     public DetailsController(DAO<Equipo> dao) {
         this.equipoDAO = dao;
     }
 
     /**
-     * Called to initialize a controller after its root element has been
-     * completely processed.
+     * Se invoca automáticamente después de cargar el FXML.
+     * <p>
+     * Rellena el selector de categorías y, si hay un equipo seleccionado en el
+     * {@link AppContext}, carga sus datos en el formulario.
+     * </p>
      *
-     * @param location  The location used to resolve relative paths for the root object, or
-     *                  {@code null} if the location is not known.
-     * @param resources The resources used to localize the root object, or {@code null} if
-     *                  the root object was not localized.
+     * @param location  ubicación usada para resolver rutas relativas, o
+     *                  {@code null} si no se conoce
+     * @param resources recursos usados para localizar la vista, o {@code null}
+     *                  si no está localizada
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -78,10 +102,9 @@ public class DetailsController implements Initializable {
     /**
      * Guarda los datos introducidos en el formulario.
      * <p>
-     * Comprueba que los campos de id, nombre, categoría y disponible no estén vacíos.
-     * Si todos tienen contenido, muestra una alerta informativa con el nombre del
-     * artículo, limpia los campos y deja el formulario listo para un nuevo registro.
-     * Si algún campo está vacío, no realiza ninguna acción.
+     * Comprueba que el nombre no esté vacío. Si hay un equipo seleccionado en el
+     * {@link AppContext}, actualiza sus datos; en caso contrario crea un equipo
+     * nuevo. Al terminar, vuelve a la vista principal.
      * </p>
      *
      * @param actionEvent evento de acción generado al pulsar el botón guardar
@@ -115,21 +138,17 @@ public class DetailsController implements Initializable {
     }
 
     /**
-     * Comprueba si alguno de los campos del formulario está vacío.
+     * Comprueba si el campo del nombre está vacío.
      *
-     * @return {@code true} si al menos uno de los campos id, nombre, categoría
-     *         o disponible está vacío; {@code false} en caso contrario
+     * @return {@code true} si el campo del nombre está vacío;
+     *         {@code false} en caso contrario
      */
     private boolean hasEmptyFields() {
         return txtName.getText().isEmpty();
     }
 
     /**
-     * Cierra la aplicación.
-     * <p>
-     * Se invoca al pulsar el botón volver y finaliza el proceso con
-     * {@link System#exit(int)} usando el código de salida {@code 0}.
-     * </p>
+     * Vuelve a la vista principal sin guardar los cambios.
      *
      * @param actionEvent evento de acción generado al pulsar el botón volver
      */
@@ -138,6 +157,15 @@ public class DetailsController implements Initializable {
         SceneNavigator.navigateToInjection("main-view.fxml","Vista principal");
     }
 
+    /**
+     * Elimina el equipo seleccionado y vuelve a la vista principal.
+     * <p>
+     * Solo actúa si existe un equipo en el {@link AppContext}; en ese caso lo
+     * borra de la base de datos mediante el DAO.
+     * </p>
+     *
+     * @param actionEvent evento de acción generado al pulsar el botón eliminar
+     */
     @FXML
     public void delete(ActionEvent actionEvent) {
         if(AppContext.getInstance().getDatos().containsKey("equipo")) {

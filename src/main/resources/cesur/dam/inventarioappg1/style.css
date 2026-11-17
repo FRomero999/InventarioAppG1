@@ -11,7 +11,6 @@
 .login-button {
     -fx-background-color: #ff9800;
     -fx-text-fill: white;
-    -fx-font-family: fantasy;
     -fx-font-size: 16px;
     -fx-background-radius: 8;
     -fx-cursor: hand;
@@ -37,4 +36,14 @@
 .equipment-table .table-row-cell:selected .text {
     -fx-fill: white;
     -fx-padding: 30px;
+}
+
+.equipment-table .column-header-background .nested-column-header .table-column .label .text{
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+}
+
+.columna1{
+    -fx-font-weight: bold;
+    -fx-background-color: #eeeeee;
 }

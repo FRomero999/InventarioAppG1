@@ -16,47 +16,57 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Utility class for navigating between FXML views in the application.
+ * Clase utilitaria para navegar entre las vistas FXML de la aplicación.
  * <p>
- * It holds a single shared {@link Stage} reference and swaps the scene shown on it
- * whenever a new view is requested. All members are static, so the navigator can be
- * used from anywhere without needing an instance.
+ * Mantiene una única referencia al {@link Stage} compartido y cambia la escena
+ * mostrada en él cada vez que se solicita una nueva vista. Todos sus miembros
+ * son estáticos, por lo que puede usarse desde cualquier punto sin necesidad de
+ * crear una instancia.
+ * </p>
  */
 public class SceneNavigator {
 
     /**
-     * The main application stage on which scenes are displayed.
+     * Escenario principal de la aplicación sobre el que se muestran las escenas.
      */
     private static Stage stage;
 
     /**
-     * Cache of already loaded scenes, keyed by FXML file name.
+     * Caché de escenas ya cargadas, indexada por el nombre del fichero FXML.
      */
     private static final Map<String, Scene> sceneCache = new HashMap<>();
+
+    /** DAO de equipos compartido por los controladores de las vistas. */
     private static DAO<Equipo> equipoDAO;
 
     /**
-     * Registers the stage that will be used for subsequent scene navigation.
+     * Registra el DAO de equipos que se inyectará en los controladores.
      *
-     * @param stage the main application {@link Stage}
+     * @param equipoDAO DAO de equipos que usarán las vistas
      */
-
     public static void setDAO(DAO<Equipo> equipoDAO) {
         SceneNavigator.equipoDAO = equipoDAO;
     }
 
+    /**
+     * Registra el escenario que se utilizará en las siguientes navegaciones.
+     *
+     * @param stage el {@link Stage} principal de la aplicación
+     */
     public static void setStage(Stage stage) {
         SceneNavigator.stage = stage;
     }
 
     /**
-     * Loads the given FXML view and displays it on the registered stage.
+     * Carga la vista FXML indicada y la muestra en el escenario registrado.
      * <p>
-     * The FXML file is resolved relative to the {@code views/} package of {@link AppG1}.
+     * El fichero FXML se busca dentro del paquete {@code views/} de {@link AppG1}.
+     * </p>
      *
-     * @param fxml  file name of the FXML view to load (resolved under {@code views/})
-     * @param title window title to set on the stage
-     * @throws RuntimeException if the FXML resource fails to load (wraps the {@link IOException})
+     * @param fxml  nombre del fichero FXML a cargar (relativo a {@code views/})
+     * @param title título de la ventana que se asignará al escenario
+     * @throws RuntimeException si no se puede cargar el recurso FXML (envuelve
+     *                          la {@link IOException})
      */
     public static void navigateTo(String fxml,String title){
         FXMLLoader fxmlLoader = new FXMLLoader(AppG1.class.getResource("views/"+fxml));
@@ -71,15 +81,18 @@ public class SceneNavigator {
     }
 
     /**
-     * Loads the given FXML view and displays it on the registered stage, reusing a
-     * previously loaded scene when available.
+     * Carga la vista FXML indicada y la muestra en el escenario registrado,
+     * reutilizando una escena ya cargada si existe.
      * <p>
-     * Scenes are cached in a {@link HashMap} keyed by the FXML file name, so each view
-     * is only loaded once (along with its controller and state).
+     * Las escenas se guardan en caché en un {@link HashMap} indexado por el
+     * nombre del fichero FXML, de modo que cada vista solo se carga una vez
+     * (junto con su controlador y su estado).
+     * </p>
      *
-     * @param fxml  file name of the FXML view to load (resolved under {@code views/})
-     * @param title window title to set on the stage
-     * @throws RuntimeException if the FXML resource fails to load (wraps the {@link IOException})
+     * @param fxml  nombre del fichero FXML a cargar (relativo a {@code views/})
+     * @param title título de la ventana que se asignará al escenario
+     * @throws RuntimeException si no se puede cargar el recurso FXML (envuelve
+     *                          la {@link IOException})
      */
     public static void navigateToCache(String fxml, String title) {
         Scene scene = sceneCache.computeIfAbsent(fxml, key -> {
@@ -95,16 +108,21 @@ public class SceneNavigator {
     }
 
     /**
-     * Loads the given FXML view and displays it on the registered stage, creating its
-     * controller through a controller factory so dependencies can be injected in the
-     * constructor.
+     * Carga la vista FXML indicada y la muestra en el escenario registrado,
+     * creando su controlador mediante una factoría para poder inyectarle
+     * dependencias en el constructor.
      * <p>
-     * The factory currently uses the no-argument constructors of the existing
-     * controllers; dependency injection can be added per view in the switch.
+     * La factoría crea el controlador adecuado según el fichero FXML y le pasa
+     * el DAO de equipos compartido ({@link #equipoDAO}), aplicando así una
+     * inyección de dependencias sencilla.
+     * </p>
      *
-     * @param fxml  file name of the FXML view to load (resolved under {@code views/})
-     * @param title window title to set on the stage
-     * @throws RuntimeException if the FXML resource fails to load (wraps the {@link IOException})
+     * @param fxml  nombre del fichero FXML a cargar (relativo a {@code views/})
+     * @param title título de la ventana que se asignará al escenario
+     * @throws RuntimeException si no se puede cargar el recurso FXML (envuelve
+     *                          la {@link IOException})
+     * @throws IllegalArgumentException si el fichero FXML no corresponde a
+     *                                  ninguna vista soportada
      */
     public static void navigateToInjection(String fxml, String title) {
         FXMLLoader fxmlLoader = new FXMLLoader(AppG1.class.getResource("views/" + fxml));

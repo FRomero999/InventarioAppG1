@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cesur.dam.inventarioappg1.controllers.DetailsController">
+<BorderPane styleClass="login-root" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cesur.dam.inventarioappg1.controllers.DetailsController">
    <center>
       <VBox alignment="CENTER" maxWidth="445.0" prefHeight="450.0" prefWidth="341.0" spacing="20.0" BorderPane.alignment="CENTER">
           <padding>
@@ -25,7 +25,7 @@
             </image>
          </ImageView>
       
-          <Label fx:id="welcomeText" text="Ficha de equipo">
+          <Label fx:id="welcomeText" text="Ficha de equipo" textFill="WHITE">
             <font>
                <Font name="System Bold" size="24.0" />
             </font>
@@ -33,25 +33,25 @@
          <FlowPane alignment="CENTER" />
          <FlowPane alignment="CENTER">
             <children>
-               <Label prefWidth="66.0" text="Nombre" />
+               <Label prefWidth="66.0" text="Nombre" textFill="WHITE" />
                <TextField fx:id="txtName" />
             </children>
          </FlowPane>
          <FlowPane alignment="CENTER">
             <children>
-               <Label prefWidth="66.0" text="Categoria" />
+               <Label prefWidth="66.0" text="Categoria" textFill="WHITE" />
                <ChoiceBox fx:id="choiceCategory" prefWidth="150.0" />
             </children>
          </FlowPane>
          <FlowPane alignment="CENTER" layoutX="30.0" layoutY="142.0">
             <children>
-               <CheckBox fx:id="chkAvailable" alignment="CENTER" mnemonicParsing="false" text="Disponible" />
+               <CheckBox fx:id="chkAvailable" alignment="CENTER" mnemonicParsing="false" text="Disponible" textFill="WHITE" />
             </children>
          </FlowPane>
 
          <FlowPane alignment="CENTER" hgap="20.0">
             <children>
-               <Button contentDisplay="TOP" defaultButton="true" mnemonicParsing="false" onAction="#goBack" text="Volver">
+               <Button contentDisplay="TOP" defaultButton="true" mnemonicParsing="false" onAction="#goBack" styleClass="login-button" text="Volver">
                   <graphic>
                      <ImageView fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                         <image>
@@ -59,7 +59,7 @@
                         </image>
                      </ImageView>
                   </graphic></Button>
-                <Button contentDisplay="TOP" graphicTextGap="0.0" onAction="#save" text="Guardar">
+                <Button contentDisplay="TOP" graphicTextGap="0.0" onAction="#save" styleClass="login-button" text="Guardar">
                   <graphic>
                      <ImageView fitHeight="150.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                         <image>
@@ -68,7 +68,7 @@
                      </ImageView>
                   </graphic>
                </Button>
-               <Button contentDisplay="TOP" graphicTextGap="0.0" onAction="#delete" text="Borrar">
+               <Button contentDisplay="TOP" graphicTextGap="0.0" onAction="#delete" styleClass="login-button" text="Borrar">
                   <graphic>
                      <ImageView fitHeight="150.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                         <image>

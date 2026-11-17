@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cesur.dam.inventarioappg1.controllers.MainController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" styleClass="login-root" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cesur.dam.inventarioappg1.controllers.MainController">
     <center>
       <VBox alignment="CENTER" spacing="10.0">
          <children>
-            <Label text="Inventario de equipos">
+            <Label text="Inventario de equipos" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="28.0" />
                </font>
@@ -26,7 +26,7 @@
             </Label>
               <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" styleClass="equipment-table" stylesheets="@../style.css">
                   <columns>
-                      <TableColumn fx:id="cId" prefWidth="75.0" text="Id" />
+                      <TableColumn fx:id="cId" prefWidth="75.0" styleClass="columna1" text="Id" />
                       <TableColumn fx:id="cName" prefWidth="75.0" text="Nombre" />
                       <TableColumn fx:id="cCategory" prefWidth="75.0" text="Categoria" />
                       <TableColumn fx:id="cAvailability" prefWidth="75.0" text="Disponibilidad" />
@@ -37,7 +37,7 @@
               </TableView>
             <FlowPane alignment="TOP_RIGHT" columnHalignment="RIGHT">
                <children>
-                  <Button mnemonicParsing="false" onAction="#addNew" text="Añadir nuevo">
+                  <Button mnemonicParsing="false" onAction="#addNew" styleClass="login-button" text="Añadir nuevo">
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -45,12 +45,15 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Century" size="12.0" />
+                     </font>
                   </Button>
                </children>
             </FlowPane>
             <FlowPane>
                <children>
-                  <Button mnemonicParsing="false" onAction="#goBack" text="Volver atras" />
+                  <Button mnemonicParsing="false" onAction="#goBack" styleClass="login-button" text="Volver atras" />
                </children>
             </FlowPane>
          </children>

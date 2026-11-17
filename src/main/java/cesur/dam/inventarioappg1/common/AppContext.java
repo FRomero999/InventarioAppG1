@@ -1,6 +1,7 @@
 package cesur.dam.inventarioappg1.common;
 
 import javafx.collections.FXCollections;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableMap;
 
 /**
@@ -22,7 +23,11 @@ public class AppContext {
     private final ObservableMap<String, Object> datos = FXCollections.observableHashMap();
 
     /** Constructor privado para impedir la instanciación externa (patrón singleton). */
-    private AppContext() {   }
+    private AppContext() {
+        datos.addListener((MapChangeListener<String, Object>) change -> {
+            System.out.println("Objeto cambiados -> "+change.getKey());
+        });
+    }
 
     /**
      * Devuelve la instancia única del contexto de la aplicación.
