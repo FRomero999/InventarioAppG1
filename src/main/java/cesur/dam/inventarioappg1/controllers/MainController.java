@@ -82,6 +82,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void addNew(ActionEvent actionEvent) {
-        SceneNavigator.navigateTo("details-view.fxml","Nuevo equipo");
+        AppContext.getInstance().getDatos().remove("equipo");
+        SceneNavigator.navigateToInjection("details-view.fxml","Nuevo equipo");
     }
 }

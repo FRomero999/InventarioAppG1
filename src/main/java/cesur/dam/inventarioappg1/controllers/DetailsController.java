@@ -25,8 +25,6 @@ public class DetailsController implements Initializable {
     private ChoiceBox<String> choiceCategory;
     @FXML
     private CheckBox chkAvailable;
-    @FXML
-    private Spinner<Integer> spinnerId;
 
     private DAO<Equipo>  equipoDAO;
 
@@ -45,7 +43,7 @@ public class DetailsController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        spinnerId.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 0,1));
+        //spinnerId.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 0,1));
 
         /*
             ChoiceBox  \
@@ -72,7 +70,7 @@ public class DetailsController implements Initializable {
             txtName.setText(equipo.getNombre());
             choiceCategory.setValue(equipo.getCategoria());
             chkAvailable.setSelected(equipo.getDisponible());
-            spinnerId.getValueFactory().setValue(Math.toIntExact(equipo.getId()));
+            //spinnerId.getValueFactory().setValue(Math.toIntExact(equipo.getId()));
         }
 
     }
@@ -105,6 +103,14 @@ public class DetailsController implements Initializable {
 
             equipoDAO.update(equipment);
             SceneNavigator.navigateToInjection("main-view.fxml","Main");
+        }else{
+            Equipo equipment = new Equipo();
+            equipment.setNombre(name);
+            equipment.setCategoria(category);
+            equipment.setDisponible(chkAvailable.isSelected());
+
+            equipoDAO.save(equipment);
+            SceneNavigator.navigateToInjection("main-view.fxml","Main");
         }
     }
 
@@ -129,6 +135,15 @@ public class DetailsController implements Initializable {
      */
     @FXML
     public void goBack(ActionEvent actionEvent) {
-        SceneNavigator.navigateTo("main-view.fxml","Vista principal");
+        SceneNavigator.navigateToInjection("main-view.fxml","Vista principal");
+    }
+
+    @FXML
+    public void delete(ActionEvent actionEvent) {
+        if(AppContext.getInstance().getDatos().containsKey("equipo")) {
+            Equipo equipment = (Equipo) AppContext.getInstance().get("equipo");
+            equipoDAO.deleteById(equipment.getId());
+            SceneNavigator.navigateToInjection("main-view.fxml","Main");
+        }
     }
 }

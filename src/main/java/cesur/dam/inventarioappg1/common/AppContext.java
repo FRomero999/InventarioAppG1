@@ -22,7 +22,7 @@ public class AppContext {
     private final ObservableMap<String, Object> datos = FXCollections.observableHashMap();
 
     /** Constructor privado para impedir la instanciación externa (patrón singleton). */
-    private AppContext() { }
+    private AppContext() {   }
 
     /**
      * Devuelve la instancia única del contexto de la aplicación.
