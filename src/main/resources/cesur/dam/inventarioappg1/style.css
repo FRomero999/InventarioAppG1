@@ -20,3 +20,21 @@
 .login-button:hover {
     -fx-background-color: #fb8c00;
 }
+
+.equipment-table {
+
+}
+
+.equipment-table .column-header-background .nested-column-header .table-column{
+    -fx-background-color: green;
+}
+
+.equipment-table .table-row-cell:selected {
+    -fx-background-color: red;
+    -fx-cell-size: 40px;
+}
+
+.equipment-table .table-row-cell:selected .text {
+    -fx-fill: white;
+    -fx-padding: 30px;
+}
