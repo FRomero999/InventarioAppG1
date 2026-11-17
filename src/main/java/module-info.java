@@ -12,4 +12,6 @@ module org.example.inventarioappg1 {
     opens cesur.dam.inventarioappg1.models to javafx.fxml;
     exports cesur.dam.inventarioappg1.controllers;
     opens cesur.dam.inventarioappg1.controllers to javafx.fxml;
+    exports cesur.dam.inventarioappg1.common;
+    opens cesur.dam.inventarioappg1.common to javafx.fxml;
 }

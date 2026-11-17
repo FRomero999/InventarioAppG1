@@ -1,8 +1,8 @@
 package cesur.dam.inventarioappg1.controllers;
 
-import cesur.dam.inventarioappg1.SceneNavigator;
+import cesur.dam.inventarioappg1.common.AppContext;
+import cesur.dam.inventarioappg1.common.SceneNavigator;
 import cesur.dam.inventarioappg1.data.DAO;
-import cesur.dam.inventarioappg1.data.DataSourceFactory;
 import cesur.dam.inventarioappg1.data.EquipoJdbcDAO;
 import cesur.dam.inventarioappg1.models.Equipo;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import javax.sql.DataSource;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -65,8 +64,16 @@ public class MainController implements Initializable {
         });
 
         table.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection)->{
-            SceneNavigator.navigateTo("details-view.fxml","Modificar equipo");
+            AppContext.getInstance().put("equipo",newSelection);
+            SceneNavigator.navigateToInjection("details-view.fxml","Modificar equipo");
         });
+
+        if(AppContext.getInstance().getDatos().containsKey("logged")){
+            if((boolean) AppContext.getInstance().getDatos().get("logged")){
+                System.out.println(AppContext.getInstance().get("logged"));
+                System.out.println(AppContext.getInstance().get("user"));
+            }
+        }
     }
 
     @FXML

@@ -1,10 +1,10 @@
 package cesur.dam.inventarioappg1.controllers;
 
-import cesur.dam.inventarioappg1.SceneNavigator;
-import cesur.dam.inventarioappg1.data.DataSourceFactory;
+import cesur.dam.inventarioappg1.common.AppContext;
+import cesur.dam.inventarioappg1.common.SceneNavigator;
+import cesur.dam.inventarioappg1.data.DAO;
 import cesur.dam.inventarioappg1.data.EquipoJdbcDAO;
 import cesur.dam.inventarioappg1.models.Equipo;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,6 +28,11 @@ public class DetailsController implements Initializable {
     @FXML
     private Spinner<Integer> spinnerId;
 
+    private DAO<Equipo>  equipoDAO;
+
+    public DetailsController(DAO<Equipo> dao) {
+        this.equipoDAO = dao;
+    }
 
     /**
      * Called to initialize a controller after its root element has been
@@ -62,6 +67,13 @@ public class DetailsController implements Initializable {
 
         choiceCategory.getSelectionModel().selectFirst();
 
+        if(AppContext.getInstance().getDatos().containsKey("equipo")){
+            Equipo equipo = (Equipo) AppContext.getInstance().get("equipo");
+            txtName.setText(equipo.getNombre());
+            choiceCategory.setValue(equipo.getCategoria());
+            chkAvailable.setSelected(equipo.getDisponible());
+            spinnerId.getValueFactory().setValue(Math.toIntExact(equipo.getId()));
+        }
 
     }
 
@@ -82,31 +94,18 @@ public class DetailsController implements Initializable {
             return;
         }
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Guardar");
-        alert.setHeaderText("Guardando");
-
         String name = txtName.getText();
         String category = choiceCategory.getSelectionModel().getSelectedItem();
-        String available = chkAvailable.isSelected() ? "disponible" : "no disponible";
 
-        alert.setContentText(name + " | " + category + " | " + available);
-        alert.showAndWait();
-        txtName.clear();
+        if(AppContext.getInstance().getDatos().containsKey("equipo")) {
+            Equipo equipment = (Equipo) AppContext.getInstance().get("equipo");
+            equipment.setNombre(name);
+            equipment.setCategoria(category);
+            equipment.setDisponible(chkAvailable.isSelected());
 
-        Equipo equipment = new Equipo();
-        equipment.setNombre(name);
-        equipment.setCategoria(category);
-        equipment.setId(Long.valueOf(spinnerId.getValue()));
-        equipment.setDisponible(chkAvailable.isSelected());
-        var dao = new EquipoJdbcDAO(DataSourceFactory.getDataSource());
-        dao.save(equipment);
-       // table.getItems().add(equipment);
-
-     //   table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-    //      System.out.println(oldValue+" | "+newValue);
-     //  });
-
+            equipoDAO.update(equipment);
+            SceneNavigator.navigateToInjection("main-view.fxml","Main");
+        }
     }
 
     /**

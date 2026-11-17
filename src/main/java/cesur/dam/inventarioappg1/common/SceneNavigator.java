@@ -1,10 +1,10 @@
-package cesur.dam.inventarioappg1;
+package cesur.dam.inventarioappg1.common;
 
+import cesur.dam.inventarioappg1.AppG1;
 import cesur.dam.inventarioappg1.controllers.DetailsController;
 import cesur.dam.inventarioappg1.controllers.LoginController;
 import cesur.dam.inventarioappg1.controllers.MainController;
 import cesur.dam.inventarioappg1.data.DAO;
-import cesur.dam.inventarioappg1.data.DataSourceFactory;
 import cesur.dam.inventarioappg1.data.EquipoJdbcDAO;
 import cesur.dam.inventarioappg1.models.Equipo;
 import javafx.fxml.FXMLLoader;
@@ -113,7 +113,7 @@ public class SceneNavigator {
             switch (fxml) {
                 case "login-view.fxml":   return new LoginController();
                 case "main-view.fxml":    return new MainController( (EquipoJdbcDAO) SceneNavigator.equipoDAO);
-                case "details-view.fxml": return new DetailsController();
+                case "details-view.fxml": return new DetailsController( SceneNavigator.equipoDAO);
             }
             throw new IllegalArgumentException("Vista no soportada: " + fxml);
         });
