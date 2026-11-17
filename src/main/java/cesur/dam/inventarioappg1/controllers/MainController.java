@@ -130,7 +130,7 @@ private Button btnModificar;
 
     @FXML
     public void onClicket(Event event) {
-        table.getSelectionModel().focus(0);
+        table.getSelectionModel().clearSelection();
         AppContext.getInstance().delet();
         btnEliminar.setDisable(true);
         btnModificar.setDisable(true);

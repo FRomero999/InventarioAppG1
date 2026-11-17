@@ -75,6 +75,13 @@ public class DetailsController implements Initializable {
             spinnerId.getValueFactory().setValue(Math.toIntExact(equipo.getId()));
         }
 
+
+
+
+
+
+
+
     }
 
     /**
@@ -137,4 +144,6 @@ public class DetailsController implements Initializable {
     public void goBack(ActionEvent actionEvent) {
         SceneNavigator.navigateToInjection("main-view.fxml","Vista principal");
     }
+
+
 }
