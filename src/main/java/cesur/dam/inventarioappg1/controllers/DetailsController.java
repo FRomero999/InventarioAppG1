@@ -75,6 +75,13 @@ public class DetailsController implements Initializable {
             spinnerId.getValueFactory().setValue(Math.toIntExact(equipo.getId()));
         }
 
+
+
+
+
+
+
+
     }
 
     /**
@@ -102,10 +109,16 @@ public class DetailsController implements Initializable {
             equipment.setNombre(name);
             equipment.setCategoria(category);
             equipment.setDisponible(chkAvailable.isSelected());
-
             equipoDAO.update(equipment);
-            SceneNavigator.navigateToInjection("main-view.fxml","Main");
+
+        }else{
+            Equipo equipment = new Equipo();
+            equipment.setNombre(name);
+            equipment.setCategoria(category);
+            equipment.setDisponible(chkAvailable.isSelected());
+            equipoDAO.save(equipment);
         }
+        SceneNavigator.navigateToInjection("main-view.fxml","Main");
     }
 
     /**
@@ -129,6 +142,8 @@ public class DetailsController implements Initializable {
      */
     @FXML
     public void goBack(ActionEvent actionEvent) {
-        SceneNavigator.navigateTo("main-view.fxml","Vista principal");
+        SceneNavigator.navigateToInjection("main-view.fxml","Vista principal");
     }
+
+
 }
