@@ -7,10 +7,14 @@ import cesur.dam.inventarioappg1.data.EquipoJdbcDAO;
 import cesur.dam.inventarioappg1.models.Equipo;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,8 +31,15 @@ public class MainController implements Initializable {
     private TableColumn<Equipo,String> cName;
     @FXML
     private TableColumn<Equipo,String> cId;
+@FXML
+private Button btnEliminar;
+@FXML
+private Button btnModificar;
+
 
     private DAO<Equipo> equipoDAO;
+    @FXML
+    private BorderPane fondo;
 
     public MainController(EquipoJdbcDAO equipoJdbcDAO) {
         this.equipoDAO = equipoJdbcDAO;
@@ -58,15 +69,18 @@ public class MainController implements Initializable {
             return new SimpleStringProperty(output);
         });
 
-        equipoDAO.findAll().forEach( (equipo)->{
-            System.out.println(equipo);
-            table.getItems().add(equipo);
-        });
+        actualizarTabla();
+        btnEliminar.setDisable(true);
+        btnModificar.setDisable(true);
 
         table.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection)->{
             AppContext.getInstance().put("equipo",newSelection);
-            SceneNavigator.navigateToInjection("details-view.fxml","Modificar equipo");
+            btnModificar.setDisable(false);
+            btnEliminar.setDisable(false);
+
         });
+
+
 
         if(AppContext.getInstance().getDatos().containsKey("logged")){
             if((boolean) AppContext.getInstance().getDatos().get("logged")){
@@ -76,12 +90,49 @@ public class MainController implements Initializable {
         }
     }
 
+    private void actualizarTabla() {
+        equipoDAO.findAll().forEach( (equipo)->{
+            System.out.println(equipo);
+            table.getItems().add(equipo);
+        });
+    }
+
     @FXML
     public void goBack(ActionEvent actionEvent) {
+        SceneNavigator.navigateToInjection("login-view.fxml","login");
     }
 
     @FXML
     public void addNew(ActionEvent actionEvent) {
-        SceneNavigator.navigateTo("details-view.fxml","Nuevo equipo");
+        AppContext.getInstance().delet();
+        SceneNavigator.navigateToInjection("details-view.fxml","Nuevo equipo");
+    }
+
+    @FXML
+    public void onEliminar(ActionEvent actionEvent) {
+        equipoDAO.deleteById(table.getSelectionModel().getSelectedItem().getId());
+        table.getItems().clear();
+        actualizarTabla();
+        btnEliminar.setDisable(true);
+        btnModificar.setDisable(true);
+        
+    }
+
+    @FXML
+    public void onselect(InputMethodEvent inputMethodEvent) {
+
+    }
+
+    @FXML
+    public void onModificar(ActionEvent actionEvent) {
+        SceneNavigator.navigateToInjection("details-view.fxml","Modificar equipo");
+    }
+
+    @FXML
+    public void onClicket(Event event) {
+        table.getSelectionModel().focus(0);
+        AppContext.getInstance().delet();
+        btnEliminar.setDisable(true);
+        btnModificar.setDisable(true);
     }
 }

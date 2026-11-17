@@ -38,7 +38,7 @@ public class SceneNavigator {
     /**
      * Registers the stage that will be used for subsequent scene navigation.
      *
-     * @param stage the main application {@link Stage}
+     * @param
      */
 
     public static void setDAO(DAO<Equipo> equipoDAO) {

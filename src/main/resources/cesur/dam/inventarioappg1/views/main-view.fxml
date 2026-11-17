@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cesur.dam.inventarioappg1.controllers.MainController">
+<BorderPane fx:id="fondo" onMouseClicked="#onClicket" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cesur.dam.inventarioappg1.controllers.MainController">
     <center>
       <VBox alignment="CENTER" spacing="10.0">
          <children>
@@ -24,7 +24,7 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Label>
-              <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0">
+              <TableView fx:id="table" onInputMethodTextChanged="#onselect" prefHeight="200.0" prefWidth="200.0">
                   <columns>
                       <TableColumn fx:id="cId" prefWidth="75.0" text="Id" />
                       <TableColumn fx:id="cName" prefWidth="75.0" text="Nombre" />
@@ -37,6 +37,8 @@
               </TableView>
             <FlowPane alignment="TOP_RIGHT" columnHalignment="RIGHT">
                <children>
+                  <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#onEliminar" prefHeight="25.0" prefWidth="110.0" text="Eliminar" />
+                  <Button fx:id="btnModificar" mnemonicParsing="false" onAction="#onModificar" prefHeight="25.0" prefWidth="112.0" text="modificar" />
                   <Button mnemonicParsing="false" onAction="#addNew" text="Añadir nuevo">
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">

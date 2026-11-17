@@ -61,5 +61,8 @@ public class AppContext {
     public void put(String key, Object value) {
         datos.put(key, value);
     }
+    public void delet(){
+        datos.clear();
+    }
 
 }
