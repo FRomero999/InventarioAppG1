@@ -1,4 +1,4 @@
-package cesur.dam.inventarioappg1.controllers;
+package cesur.dam.inventarioappg1.common;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;

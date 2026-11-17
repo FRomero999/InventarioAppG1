@@ -1,10 +1,9 @@
 package cesur.dam.inventarioappg1;
 
+import cesur.dam.inventarioappg1.common.SceneNavigator;
 import cesur.dam.inventarioappg1.data.DataSourceFactory;
 import cesur.dam.inventarioappg1.data.EquipoJdbcDAO;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
