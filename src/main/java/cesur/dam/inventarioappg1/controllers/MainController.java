@@ -1,6 +1,7 @@
 package cesur.dam.inventarioappg1.controllers;
 
 import cesur.dam.inventarioappg1.SceneNavigator;
+import cesur.dam.inventarioappg1.data.DAO;
 import cesur.dam.inventarioappg1.data.DataSourceFactory;
 import cesur.dam.inventarioappg1.data.EquipoJdbcDAO;
 import cesur.dam.inventarioappg1.models.Equipo;
@@ -11,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import javax.sql.DataSource;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -26,6 +28,12 @@ public class MainController implements Initializable {
     private TableColumn<Equipo,String> cName;
     @FXML
     private TableColumn<Equipo,String> cId;
+
+    private DAO<Equipo> equipoDAO;
+
+    public MainController(EquipoJdbcDAO equipoJdbcDAO) {
+        this.equipoDAO = equipoJdbcDAO;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -51,20 +59,22 @@ public class MainController implements Initializable {
             return new SimpleStringProperty(output);
         });
 
-        var dao = new EquipoJdbcDAO(DataSourceFactory.getDataSource());
-        dao.findAll().forEach( (equipo)->{
+        equipoDAO.findAll().forEach( (equipo)->{
             System.out.println(equipo);
             table.getItems().add(equipo);
+        });
+
+        table.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection)->{
+            SceneNavigator.navigateTo("details-view.fxml","Modificar equipo");
         });
     }
 
     @FXML
     public void goBack(ActionEvent actionEvent) {
-        SceneNavigator.navigateTo("login-view.fxml","Login");
     }
 
     @FXML
     public void addNew(ActionEvent actionEvent) {
-        SceneNavigator.navigateTo("details-view.fxml","Details");
+        SceneNavigator.navigateTo("details-view.fxml","Nuevo equipo");
     }
 }
