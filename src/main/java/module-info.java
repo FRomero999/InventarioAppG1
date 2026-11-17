@@ -2,9 +2,9 @@ module org.example.inventarioappg1 {
     requires javafx.controls;
     requires javafx.fxml;
     requires static lombok;
-    requires java.sql;
     requires mysql.connector.j;
     requires java.naming;
+    requires java.sql;
 
     opens cesur.dam.inventarioappg1 to javafx.fxml;
     exports cesur.dam.inventarioappg1;

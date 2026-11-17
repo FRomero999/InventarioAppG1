@@ -9,9 +9,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class MainController implements Initializable {
 
@@ -44,6 +46,7 @@ public class MainController implements Initializable {
         cCategory.setCellValueFactory( (row)->{
             return new SimpleStringProperty(String.valueOf(row.getValue().getCategoria()).toUpperCase());
         });
+        cAvailability.setCellValueFactory( new PropertyValueFactory("disponible") );
         cAvailability.setCellValueFactory( (row)->{
             var availability = row.getValue().getDisponible();
             String output = availability? "disponible":"no disponible";
@@ -55,6 +58,7 @@ public class MainController implements Initializable {
             System.out.println(equipo);
             table.getItems().add(equipo);
         });
+
     }
 
     @FXML
@@ -63,5 +67,11 @@ public class MainController implements Initializable {
 
     @FXML
     public void addNew(ActionEvent actionEvent) {
+        var items = table.getItems();
+        var filtrado = items.stream().filter((equipo)->{
+            return equipo.getCategoria().equalsIgnoreCase("portátiles");
+        }).collect(Collectors.toList());
+        items.clear();
+        items.addAll(filtrado);
     }
 }
