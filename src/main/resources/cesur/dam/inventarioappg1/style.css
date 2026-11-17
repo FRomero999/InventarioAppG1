@@ -1,14 +1,8 @@
-@font-face {
-    font-family: '07LogoTypeGothic7';
-    src: url("LogoTypeGothic.otf");
-}
-
 .login-root {
     -fx-background-color: linear-gradient(to bottom, #1e3c72, #2a5298);
 }
 
 .login-title {
-    font-family: '07LogoTypeGothic7';
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 22px;
